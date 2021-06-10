@@ -17,7 +17,7 @@
 # Development environment
 
 - Go SDK env
-```go
+```
 set GO111MODULE=on
 set GOARCH=amd64
 set GOBIN=
@@ -56,11 +56,13 @@ set PKG_CONFIG=pkg-config
 set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -fdebug-prefix-map=C:\Users\10991\AppData\Local\Temp\go-build1440782241=/tmp/go-build -gno-record-gcc-switches
 ```
 - IDE: GoLand2020
-- Go Module, please visit：https://goproxy.cn/ or 阿里云
+- Go Module, please visit：https://goproxy.cn/ or https://mirrors.aliyun.com/goproxy/
 
 # Libraries
 1. [Gin](https://github.com/gin-gonic/gin): 轻量级Web框架 
 1. [Viper](https://github.com/spf13/viper): 配置文件读取
+1. [GORM](https://github.com/go-gorm/gorm): 数据库ORM
+
 
 # Community
 

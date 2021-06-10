@@ -2,6 +2,7 @@ package main
 
 import (
 	"HideSeekCatGo/config"
+	"HideSeekCatGo/model"
 	"HideSeekCatGo/router"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -28,6 +29,10 @@ func main() {
 	if err := config.Init(*cfg); err != nil {
 		panic(err)
 	}
+
+	// init db.
+	model.DB.Init()
+	defer model.DB.Close()
 
 	// set gin mode.
 	gin.SetMode(viper.GetString("runmode"))

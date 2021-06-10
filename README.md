@@ -60,7 +60,7 @@ set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessag
 
 # Libraries
 1. [Gin](https://github.com/gin-gonic/gin): 轻量级Web框架 
-2. 
+1. [Viper](https://github.com/spf13/viper): 配置文件读取
 
 # Community
 

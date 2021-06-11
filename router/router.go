@@ -2,6 +2,7 @@ package router
 
 import (
 	"HideSeekCatGo/handler/sd"
+	"HideSeekCatGo/handler/user"
 	"HideSeekCatGo/router/middleware"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -19,6 +20,11 @@ func LoadRouter(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.NoRoute(func(c *gin.Context) {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
+
+	u := g.Group("/v1/user")
+	{
+		u.POST("", user.Create)
+	}
 
 	// the health check handlers.
 	svcd := g.Group("/sd")

@@ -23,7 +23,11 @@ func LoadRouter(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 
 	u := g.Group("/v1/user")
 	{
-		u.POST("/:username", user.Create)
+		u.GET("", user.List)
+		u.GET("/:username", user.Get)
+		u.POST("", user.Create)
+		u.PUT("/:id", user.Update)
+		u.DELETE("/:id", user.Delete)
 	}
 
 	// the health check handlers.

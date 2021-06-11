@@ -5,26 +5,19 @@ import (
 	"HideSeekCatGo/handler"
 	"HideSeekCatGo/model"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
-// create a new user.
-func Create(c *gin.Context) {
-	/**
-	1. 解析消息体
-	2. 参数校验
-	3. 加密密码
-	4. 在数据库中添加数据记录
-	5. 返回结果
-	*/
-	var r CreateRequest
-	if err := c.Bind(&r); err != nil {
+// update a exist user info.
+func Update(c *gin.Context) {
+	userId, _ := strconv.Atoi(c.Param("id"))
+	var u model.User
+	if err := c.Bind(&u); err != nil {
 		handler.SendResponse(c, errno.ErrBind, nil)
 		return
 	}
-	u := model.User{
-		UserName: r.UserName,
-		Password: r.Password,
-	}
+	u.ID = uint(userId)
+
 	// validate data.
 	if err := u.Validate(); err != nil {
 		handler.SendResponse(c, errno.ErrValidation, nil)
@@ -35,12 +28,11 @@ func Create(c *gin.Context) {
 		handler.SendResponse(c, errno.ErrEncrypt, nil)
 		return
 	}
-	// insert the user to the database.
-	if err := u.Create(); err != nil {
+
+	// save changed fields.
+	if err := u.Update(); err != nil {
 		handler.SendResponse(c, errno.ErrDatabase, nil)
 		return
 	}
-	resp := CreateResponse{UserName: r.UserName}
-	handler.SendResponse(c, nil, resp)
-
+	handler.SendResponse(c, nil, nil)
 }

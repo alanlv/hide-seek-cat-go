@@ -56,12 +56,15 @@ set PKG_CONFIG=pkg-config
 set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -fdebug-prefix-map=C:\Users\10991\AppData\Local\Temp\go-build1440782241=/tmp/go-build -gno-record-gcc-switches
 ```
 - IDE: GoLand2020
+- PostMan: 接口测试
+- jmeter: 压力测试
 - Go Module, please visit：https://goproxy.cn/ or https://mirrors.aliyun.com/goproxy/
 
 # Libraries
 1. [Gin](https://github.com/gin-gonic/gin): 轻量级Web框架 
 1. [Viper](https://github.com/spf13/viper): 配置文件读取
 1. [GORM](https://github.com/go-gorm/gorm): 数据库ORM
+1. [validator.v9](https://github.com/go-playground/validator): 参数校验
 
 
 # Community

@@ -4,6 +4,7 @@ import (
 	"HideSeekCatGo/config"
 	"HideSeekCatGo/model"
 	"HideSeekCatGo/router"
+	"HideSeekCatGo/router/middleware"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
@@ -40,13 +41,10 @@ func main() {
 	// create the gin engine.
 	g := gin.New()
 
-	// gin middlewares.
-	middlewares := []gin.HandlerFunc{}
-
 	// routes.
 	router.LoadRouter(
 		g,
-		middlewares...,
+		middleware.RequestId(),
 	)
 
 	// ping the server to make sure the router is working.

@@ -65,6 +65,7 @@ set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessag
 1. [Viper](https://github.com/spf13/viper): 配置文件读取
 1. [GORM](https://github.com/go-gorm/gorm): 数据库ORM
 1. [validator.v9](https://github.com/go-playground/validator): 参数校验
+1. [UUID](github.com/satori/go.uuid): 生成唯一ID
 
 
 # Community

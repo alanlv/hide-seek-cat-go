@@ -16,3 +16,7 @@ type UserList struct {
 	Lock  *sync.Mutex
 	IdMap map[uint]*UserInfo
 }
+
+type Token struct {
+	Token string `json:"token"`
+}

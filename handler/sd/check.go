@@ -18,13 +18,25 @@ const (
 	GB = 1024 * MB
 )
 
-// HealthCheck shows `OK` as the ping-pong result.
+// @Summary 生死健康检查
+// @Description go协程不断检查服务器是否宕机
+// @Tags sd
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} plain "OK"
+// @Router /sd/health [get]
 func HealthCheck(c *gin.Context) {
 	message := "OK"
 	c.String(http.StatusOK, "\n"+message)
 }
 
-// DiskCheck checks the disk usage.
+// @Summary 磁盘信息
+// @Description 检查服务器的磁盘信息
+// @Tags sd
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} plain "OK - Free space: 17233MB (16GB) / 51200MB (50GB) | Used: 33%"
+// @Router /sd/disk [get]
 func DiskCheck(c *gin.Context) {
 	u, _ := disk.Usage("/")
 
@@ -49,7 +61,13 @@ func DiskCheck(c *gin.Context) {
 	c.String(status, "\n"+message)
 }
 
-// CPUCheck checks the cpu usage.
+// @Summary CPU检查
+// @Description 检查服务器的CPU信息
+// @Tags sd
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} plain "CRITICAL - Load average: 1.78, 1.99, 2.02 | Cores: 2"
+// @Router /sd/cpu [get]
 func CPUCheck(c *gin.Context) {
 	cores, _ := cpu.Counts(false)
 
@@ -73,7 +91,13 @@ func CPUCheck(c *gin.Context) {
 	c.String(status, "\n"+message)
 }
 
-// RAMCheck checks the disk usage.
+// @Summary 内存检查
+// @Description 检查服务器的内存信息
+// @Tags sd
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} plain "OK - Free space: 402MB (0GB) / 8192MB (8GB) | Used: 4%"
+// @Router /sd/ram [get]
 func RAMCheck(c *gin.Context) {
 	u, _ := mem.VirtualMemory()
 

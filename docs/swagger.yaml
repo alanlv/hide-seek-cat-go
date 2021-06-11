@@ -1,0 +1,258 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  handler.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      message:
+        type: string
+    type: object
+  model.User:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      password:
+        type: string
+      updatedAt:
+        type: string
+      user_name:
+        type: string
+    required:
+    - password
+    - user_name
+    type: object
+  user.CreateRequest:
+    properties:
+      password:
+        type: string
+      user_name:
+        type: string
+    type: object
+  user.CreateResponse:
+    properties:
+      user_name:
+        type: string
+    type: object
+  user.ListRequest:
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+      user_name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      description: 用户登陆，传入用户名和密码，成功则下发TOKEN。(JWT)
+      parameters:
+      - description: Username
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: Password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ"}}'
+          schema:
+            type: string
+      summary: 用户登陆
+  /sd/cpu:
+    get:
+      consumes:
+      - application/json
+      description: 检查服务器的CPU信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'CRITICAL - Load average: 1.78, 1.99, 2.02 | Cores: 2'
+          schema:
+            type: string
+      summary: CPU检查
+      tags:
+      - sd
+  /sd/disk:
+    get:
+      consumes:
+      - application/json
+      description: 检查服务器的磁盘信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'OK - Free space: 17233MB (16GB) / 51200MB (50GB) | Used: 33%'
+          schema:
+            type: string
+      summary: 磁盘信息
+      tags:
+      - sd
+  /sd/health:
+    get:
+      consumes:
+      - application/json
+      description: go协程不断检查服务器是否宕机
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 生死健康检查
+      tags:
+      - sd
+  /sd/ram:
+    get:
+      consumes:
+      - application/json
+      description: 检查服务器的内存信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'OK - Free space: 402MB (0GB) / 8192MB (8GB) | Used: 4%'
+          schema:
+            type: string
+      summary: 内存检查
+      tags:
+      - sd
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: 不需要传参，获取全部用户及其信息。分页查询、go协程提升并发性能
+      parameters:
+      - description: List users
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"totalCount":1,"userList":[{"id":0,"username":"admin","random":"user
+            ''admin'' get random string ''EnqntiSig''","password":"$2a$10$veGcArz47VGj7l9xN7g2iuT9TF21jLI1YGXarGzvARNdnt4inC9PG","createdAt":"2018-05-28
+            00:25:33","updatedAt":"2018-05-28 00:25:33"}]}}'
+          schema:
+            $ref: '#/definitions/user.CreateResponse'
+      summary: 获取全部用户
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: 添加用户并保存到数据库中
+      parameters:
+      - description: Create a new user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/user.CreateResponse'
+      summary: 新建用户
+      tags:
+      - user
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 拿到要删除的用户的id,然后根据id删除该用户。注意，gorm的软删除
+      parameters:
+      - description: The user's database id index num
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":null}'
+          schema:
+            $ref: '#/definitions/handler.Response'
+      summary: 删除某个用户
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: 传入用户的id和全部字段进行更新信息
+      parameters:
+      - description: The user's database id index num
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: The user info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":null}'
+          schema:
+            $ref: '#/definitions/handler.Response'
+      summary: 更新用户信息
+      tags:
+      - user
+  /user/{username}:
+    get:
+      consumes:
+      - application/json
+      description: 通过用户的username来获取该用户信息
+      parameters:
+      - description: UserName
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong","password":"$2a$10$E0kwtmtLZbwW/bDQ8qI8e.eHPqhQOW9tvjwpyo/p05f/f4Qvr3OmS"}}'
+          schema:
+            $ref: '#/definitions/model.User'
+      summary: 获取某个用户的具体信息
+      tags:
+      - user
+swagger: "2.0"

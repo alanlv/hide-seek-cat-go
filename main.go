@@ -2,6 +2,8 @@ package main
 
 import (
 	"HideSeekCatGo/config"
+	"HideSeekCatGo/docs"
+	_ "HideSeekCatGo/docs"
 	"HideSeekCatGo/model"
 	"HideSeekCatGo/router"
 	"HideSeekCatGo/router/middleware"
@@ -16,6 +18,7 @@ import (
 
 /**
 躲猫猫后端Go
+swagger: https://github.com/swaggo/swag/blob/master/README.md
 @author yinlei
 */
 
@@ -37,6 +40,14 @@ func main() {
 
 	// set gin mode.
 	gin.SetMode(viper.GetString("runmode"))
+
+	// swaggper. 更改配置需要swag init --parseDependency --parseInternal    http://localhost:8080/swagger/index.html
+	docs.SwaggerInfo.Title = "躲猫猫API"
+	docs.SwaggerInfo.Description = "躲猫猫 Go RESTful API"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "localhost:8080"
+	docs.SwaggerInfo.BasePath = "/v1"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	// create the gin engine.
 	g := gin.New()

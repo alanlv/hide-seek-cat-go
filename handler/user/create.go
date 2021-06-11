@@ -7,7 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// create a new user.
+// @Summary 新建用户
+// @Description 添加用户并保存到数据库中
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Param user body user.CreateRequest true "Create a new user"
+// @Success 200 {object} user.CreateResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router /user [post]
 func Create(c *gin.Context) {
 	/**
 	1. 解析消息体

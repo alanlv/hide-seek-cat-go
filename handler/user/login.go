@@ -8,7 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// login by jwt.
+// @Summary 用户登陆
+// @Description 用户登陆，传入用户名和密码，成功则下发TOKEN。(JWT)
+// @Produce  json
+// @Param user_name body string true "UserName"
+// @Param password body string true "Password"
+// @Success 200 {string} json "{"code":0,"message":"OK","data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ"}}"
+// @Router /login [post]
 func Login(c *gin.Context) {
 	/**
 	1. 解析用户名和密码

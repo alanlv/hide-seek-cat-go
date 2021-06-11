@@ -58,6 +58,8 @@ set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessag
 - IDE: GoLand2020
 - PostMan: 接口测试
 - jmeter: 压力测试
+- 单元测试、性能测试、性能分析
+- Swagger在线文档
 - Go Module, please visit：https://goproxy.cn/ or https://mirrors.aliyun.com/goproxy/
 
 # Libraries
@@ -67,6 +69,7 @@ set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessag
 1. [validator.v9](https://github.com/go-playground/validator): 参数校验
 1. [UUID](github.com/satori/go.uuid): 生成唯一ID
 1. [JWT](github.com/dgrijalva/jwt-go): JWT
+1. [Swagger](https://github.com/swaggo/gin-swagger): gin-middleware Swagger在线接口文档
 
 
 # Community

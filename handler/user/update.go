@@ -8,7 +8,15 @@ import (
 	"strconv"
 )
 
-// update a exist user info.
+// @Summary 更新用户信息
+// @Description 传入用户的id和全部字段进行更新信息
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Param id path uint64 true "The user's database id index num"
+// @Param user body model.User true "The user info"
+// @Success 200 {object} handler.Response "{"code":0,"message":"OK","data":null}"
+// @Router /user/{id} [put]
 func Update(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Param("id"))
 	var u model.User

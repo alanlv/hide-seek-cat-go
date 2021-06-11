@@ -1,10 +1,13 @@
 package router
 
 import (
+	_ "HideSeekCatGo/docs"
 	"HideSeekCatGo/handler/sd"
 	"HideSeekCatGo/handler/user"
 	"HideSeekCatGo/router/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 	"net/http"
 )
 
@@ -21,7 +24,11 @@ func LoadRouter(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
 
-	g.POST("/login", user.Login)
+	// swagger.
+	g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	// login.
+	g.POST("/v1/login", user.Login)
 
 	u := g.Group("/v1/user")
 	u.Use(middleware.AuthMiddleware())

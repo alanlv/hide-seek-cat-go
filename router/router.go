@@ -9,6 +9,8 @@ import (
 	"github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
 	"net/http"
+
+	"github.com/gin-contrib/cors"
 )
 
 func LoadRouter(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
@@ -17,6 +19,7 @@ func LoadRouter(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.Use(middleware.NoCache)
 	g.Use(middleware.Options)
 	g.Use(middleware.Secure)
+	g.Use(cors.Default())
 	g.Use(mw...)
 
 	// 404.
@@ -29,13 +32,13 @@ func LoadRouter(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 
 	// login.
 	g.POST("/v1/login", user.Login)
+	g.POST("/v1/register", user.Create)
 
 	u := g.Group("/v1/user")
 	u.Use(middleware.AuthMiddleware())
 	{
 		u.GET("", user.List)
 		u.GET("/:username", user.Get)
-		u.POST("", user.Create)
 		u.PUT("/:id", user.Update)
 		u.DELETE("/:id", user.Delete)
 	}

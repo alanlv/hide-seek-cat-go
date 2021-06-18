@@ -61,6 +61,7 @@ set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessag
 - 单元测试、性能测试、性能分析
 - Swagger在线文档
 - Go Module, please visit：https://goproxy.cn/ or https://mirrors.aliyun.com/goproxy/
+- Github Action for CI/CD: 风格检查、安全扫描、代码走查
 
 # Libraries
 1. [Gin](https://github.com/gin-gonic/gin): 轻量级Web框架 
